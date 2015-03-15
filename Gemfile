@@ -45,6 +45,8 @@ gem 'acts_as_list'
 gem 'acts_as_tree_rails3'
 gem 'recaptcha', :require => 'recaptcha/rails', :branch => 'rails3'
 
+gem 'launchy'
+
 group :development, :test do
   gem 'ruby-debug19'
   gem 'factory_girl', '~> 2.2'

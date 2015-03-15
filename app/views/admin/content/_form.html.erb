@@ -147,6 +147,17 @@
       <%= render 'admin/content/attachment', { :attachment_num => 1, :hidden => false } -%>
     </ul>
   </div>    
+
+  <% if current_user.admin? %>
+  <div class='separator'  >
+    <h4><%= _("Merge Articles") %></h4>
+    <div class=''>
+      Article ID: <%= text_field 'article', 'merge', {:name => 'merge_with'} %>
+      <%= button_to "Merge", action: "excerpt" %>
+    </div>
+  </div>
+  <% end %>
+
   </div>
 
 </div>
