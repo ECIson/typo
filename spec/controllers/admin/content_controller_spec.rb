@@ -525,6 +525,16 @@ describe Admin::ContentController do
         article.extended.should == 'bar<!--more-->baz'
       end
 
+      #merge test
+      it 'should allow admins to merge articles' do
+        article = @article
+        Article.should_receive(:get_or_build_article) {article}
+        article.should_receive(:merge_with)
+        post :merge_articles, 'id' => article.id, 'merge_with' => 2, 'article' => {
+          'body_and_extended' => 'foo<!--more-->bar<!--more-->baz'
+        }
+      end
+
       it 'should delete draft about this article if update' do
         article = @article
         draft = Article.create!(article.attributes.merge(:state => 'draft', :parent_id => article.id, :guid => nil))
@@ -634,6 +644,16 @@ describe Admin::ContentController do
         response.should render_template('new')
         assigns(:article).should_not be_nil
         assigns(:article).should be_valid
+      end
+
+      #merge test for publisher
+      it 'should not allow publishers to merge articles' do
+        article = @article
+        Article.should_receive(:get_or_build_article) {article}
+        article.should_not_receive(:merge_with)
+        post :merge_articles, 'id' => article.id, 'merge_with' => 2, 'article' => {
+          'body_and_extended' => 'foo<!--more-->bar<!--more-->baz'
+        }
       end
 
       it 'should update article by edit action' do

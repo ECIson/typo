@@ -23,6 +23,17 @@ class Admin::ContentController < Admin::BaseController
     end
   end
 
+  def merge_articles
+    #merge_with logic
+    #puts params
+    #@article = Article.find(params[:id])
+    #puts params[:merge_with]
+    if current_user.admin? then
+      @article.merge_with(params["merge_with"])
+    end
+    #redirect_to index
+  end
+
   def new
     new_or_edit
   end
@@ -140,11 +151,11 @@ class Admin::ContentController < Admin::BaseController
   def real_action_for(action); { 'add' => :<<, 'remove' => :delete}[action]; end
 
   def new_or_edit
+    #puts params
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
     @article = Article.get_or_build_article(id)
     @article.text_filter = current_user.text_filter if current_user.simple_editor?
-
     @post_types = PostType.find(:all)
     if request.post?
       if params[:article][:draft]
@@ -155,7 +166,6 @@ class Admin::ContentController < Admin::BaseController
         end
       end
     end
-
     @article.keywords = Tag.collection_to_string @article.tags
     @article.attributes = params[:article]
     # TODO: Consider refactoring, because double rescue looks... weird.
@@ -167,6 +177,8 @@ class Admin::ContentController < Admin::BaseController
       save_attachments
       
       @article.state = "draft" if @article.draft
+
+      merge_articles
 
       if @article.save
         destroy_the_draft unless @article.draft

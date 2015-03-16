@@ -6,8 +6,8 @@ Feature: Merge Articles
   Background:
     Given the blog is set up
     And I am logged into the admin panel
-    And I make an article named "Foobar" with author "Me"
-    And I make an article named "FoobarTwo" with author "SomeoneElse"
+    And I make an article named "Foobar" with author "Me" and text "Foo"
+    And I make an article named "FoobarTwo" with author "SomeoneElse" and text "Bar"
     And article "Foobar" is merged with "FoobarTwo"
 
   Scenario: The merged article should only have one author

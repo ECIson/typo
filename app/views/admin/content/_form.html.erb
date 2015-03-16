@@ -152,8 +152,8 @@
   <div class='separator'  >
     <h4><%= _("Merge Articles") %></h4>
     <div class=''>
-      Article ID: <%= text_field 'article', 'merge', {:name => 'merge_with'} %>
-      <%= button_to "Merge", action: "excerpt" %>
+      Article ID: <%= text_field_tag 'merge_id', value = nil, {:name => 'merge_with'} %>
+      <%= button_to "Merge", admin_content_path, method: :post %>
     </div>
   </div>
   <% end %>

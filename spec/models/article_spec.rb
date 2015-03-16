@@ -97,6 +97,30 @@ describe Article do
     assert_equal 1, b.categories.size
   end
 
+  #test article merge
+  
+  it "has bodies of both articles when merged" do
+    a = Article.new
+    a.user_id = 1
+    a.body = "Foo"
+    a.title = "Aaa"
+    assert a.save
+
+    b = Article.new
+    b.user_id = 2
+    b.body = "Bar"
+    b.title = "Zzz"
+    bbody = b.body
+    assert b.save
+    assert Article.where(:id => b.user_id).blank? == false
+
+    c = a.merge_with(b.user_id)
+    assert c.body.include?(a.body)
+    assert c.body.include?(bbody)
+    assert Article.where(:id => b.user_id).blank? == true
+  end
+  
+
   it "test_permalink_with_title" do
     article = Factory(:article, :permalink => 'article-3', :published_at => Time.utc(2004, 6, 1))
     assert_equal(article,
