@@ -24,7 +24,9 @@ Feature: Merge Articles
     And I make an article named "FoobarTwo" with author "Me" and text "67890"
     And I follow "Foobar"
     When I fill in "merge_with" with "4"
-    When I press "Merge"
+    Then show me the page
+    When I click on "Merge"
+    Then show me the page
     Then I should see "Foobar"
     When I follow "Foobar"
     Then I should see "12345"

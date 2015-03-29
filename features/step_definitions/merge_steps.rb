@@ -28,3 +28,7 @@ Given /^an article named "(.*)" with author "(.*)", text "(.*)", id "(.*)", and 
   #puts id.to_i
   #puts a.id
 end
+
+When /^I click on "Merge"$/ do
+  click_button("Merge")
+end
