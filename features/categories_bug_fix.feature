@@ -8,3 +8,8 @@ Feature: See categories page
     Given I am logged into the admin panel
     When I go to the categories page
     Then I should see "Categories"
+    When I fill in "category_name" with "AAA"
+    And I fill in "category_keywords" with "FOO"
+    And I fill in "category_description" with "asdf"
+    And I press "Save"
+    Then I should see "AAA"
